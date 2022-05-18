@@ -1,0 +1,30 @@
+2022-05-17 04:05:41 INFO  ConveyorController:31 - Got LoanApplicationRequestDTO 
+2022-05-17 04:05:41 INFO  ConveyorController:38 - Bad request 
+2022-05-17 04:06:23 INFO  ConveyorController:31 - Got LoanApplicationRequestDTO 
+2022-05-17 04:06:23 INFO  ConveyorController:38 - Bad request 
+2022-05-17 04:07:10 INFO  ConveyorController:31 - Got LoanApplicationRequestDTO 
+2022-05-17 04:07:10 INFO  ConveyorController:38 - Bad request 
+2022-05-17 04:08:01 INFO  ConveyorController:32 - Got LoanApplicationRequestDTO 
+2022-05-17 04:08:01 INFO  ConveyorController:39 - Bad request 
+2022-05-17 04:09:40 INFO  ConveyorController:32 - Got LoanApplicationRequestDTO 
+2022-05-17 04:09:40 INFO  ConveyorController:39 - Bad request 
+2022-05-17 04:11:35 INFO  ConveyorController:32 - Got LoanApplicationRequestDTO 
+2022-05-17 04:11:35 INFO  ConveyorController:39 - Bad request 
+2022-05-17 04:11:35 INFO  ConveyorController:47 - Sended LoanOfferDTO 
+2022-05-18 04:02:35 INFO  ConveyorController:35 - Got LoanApplicationRequestDTO 
+2022-05-18 04:02:35 INFO  ConveyorController:45 - Bad request 
+2022-05-18 04:02:36 INFO  ConveyorController:35 - Got LoanApplicationRequestDTO 
+2022-05-18 04:02:36 INFO  ConveyorController:45 - Bad request 
+2022-05-18 04:03:48 INFO  ConveyorController:35 - Got LoanApplicationRequestDTO 
+2022-05-18 04:08:33 INFO  ConveyorController:35 - Got LoanApplicationRequestDTO 
+2022-05-18 04:11:32 INFO  ConveyorController:36 - Got LoanApplicationRequestDTO 
+2022-05-18 04:11:32 INFO  ConveyorController:66 - Sended LoanOfferDTO 
+2022-05-18 04:13:26 INFO  ConveyorController:36 - Got LoanApplicationRequestDTO 
+2022-05-18 04:13:26 INFO  ConveyorController:66 - Sended LoanOfferDTO 
+2022-05-18 06:20:05 INFO  ConveyorController:83 - Got ScoringDataDTO
+2022-05-18 06:20:05 INFO  CalculationCredit:57 - DECLINED :TOO OLD OR TOO YOUNG
+2022-05-18 06:20:05 INFO  CalculationCredit:57 - DECLINED :TOO OLD OR TOO YOUNG
+2022-05-18 06:22:22 INFO  ConveyorController:83 - Got ScoringDataDTO
+2022-05-18 06:22:22 INFO  CalculationCredit:57 - DECLINED :TOO OLD OR TOO YOUNG
+2022-05-18 06:22:22 INFO  CalculationCredit:57 - DECLINED :TOO OLD OR TOO YOUNG
+2022-05-18 06:22:22 INFO  ConveyorController:106 - Sended CreditDTO
