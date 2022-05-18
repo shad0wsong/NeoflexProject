@@ -26,8 +26,7 @@ import java.util.List;
 public class ConveyorController {
     static Logger log = Logger.getLogger(ConveyorController.class.getName());
 
-    @Value("8")
-    String rate;
+    BigDecimal rate = new BigDecimal(0.08);
 
     @Autowired
     CalculationCredit calculationCredit;
@@ -36,58 +35,66 @@ public class ConveyorController {
     @ApiOperation(value = "get offers",response = List.class)
     @PostMapping(value = "/conveyor/offers" )
     public List<LoanOfferDTO> offers(@RequestBody LoanApplicationRequestDTO loanApplicationRequestDTO) throws LoanApplicationRequestDTOValidationExc {
-        log.info("Got LoanApplicationRequestDTO ");
+        log.info("Got LoanApplicationRequestDTO "+loanApplicationRequestDTO.getFirstName()+" "+loanApplicationRequestDTO.getLastName()
+                +" "+loanApplicationRequestDTO.getMiddleName()+"amount: "+loanApplicationRequestDTO.getAmount() +" passport: "+loanApplicationRequestDTO.getPassportSeries()+" "+
+                loanApplicationRequestDTO.getPassportNumber() +"birthday:"+loanApplicationRequestDTO.getBirthdayDate());
 
-
+/*
         List<String>errorList=loanApplicationRequestDTO.validate();
         if(!errorList.isEmpty()) {
             String errorString = "";
             for (String e : errorList) {
                 errorString += e;
             }
-            log.info("Bad request.ERROR 400 ");
+            log.error("Bad request.ERROR 400 ");
             throw new LoanApplicationRequestDTOValidationExc(errorString);
-        }
+        }*/
 
 
         List<LoanOfferDTO> offers = new ArrayList<>();
-        offers.add(new LoanOfferDTO(null, loanApplicationRequestDTO.getAmount().add(BigDecimal.valueOf(1000)),
-                loanApplicationRequestDTO.getTerm(), loanApplicationRequestDTO.getAmount().add(BigDecimal.valueOf(1000)).divide(BigDecimal.valueOf(loanApplicationRequestDTO.getTerm()),RoundingMode.HALF_UP),
-                BigDecimal.valueOf(Integer.valueOf(rate)).subtract(BigDecimal.valueOf(1)), true, false));
+        offers.add(new LoanOfferDTO(null, loanApplicationRequestDTO.getAmount(),
+                loanApplicationRequestDTO.getTerm(), calculationCredit.calcMonthlyOffer(loanApplicationRequestDTO.getAmount(),rate.subtract(BigDecimal.valueOf(0.01)), loanApplicationRequestDTO.getTerm()),
+                rate.subtract(BigDecimal.valueOf(0.01)), true, false));
 
-        offers.add(new LoanOfferDTO(null, loanApplicationRequestDTO.getAmount().subtract(BigDecimal.valueOf(1000)),
-                loanApplicationRequestDTO.getTerm(), loanApplicationRequestDTO.getAmount().add(BigDecimal.valueOf(1000)).divide(BigDecimal.valueOf(loanApplicationRequestDTO.getTerm()),RoundingMode.HALF_UP),
-                BigDecimal.valueOf(Integer.valueOf(rate)).add(BigDecimal.valueOf(1)), false, false));
+        offers.add(new LoanOfferDTO(null, loanApplicationRequestDTO.getAmount(),
+                loanApplicationRequestDTO.getTerm(), calculationCredit.calcMonthlyOffer(loanApplicationRequestDTO.getAmount(),rate.add(BigDecimal.valueOf(0.01)), loanApplicationRequestDTO.getTerm()),
+                rate.add(BigDecimal.valueOf(0.01)), false, false));
 
-        offers.add(new LoanOfferDTO(null, loanApplicationRequestDTO.getAmount().subtract(BigDecimal.valueOf(1000)),
-                loanApplicationRequestDTO.getTerm(), (loanApplicationRequestDTO.getAmount().add(BigDecimal.valueOf(1000))).divide(BigDecimal.valueOf(loanApplicationRequestDTO.getTerm()), RoundingMode.HALF_UP),
-                BigDecimal.valueOf(Integer.valueOf(rate)).add(BigDecimal.valueOf(1)), false, true));
+        offers.add(new LoanOfferDTO(null, loanApplicationRequestDTO.getAmount(),
+                loanApplicationRequestDTO.getTerm(), calculationCredit.calcMonthlyOffer(loanApplicationRequestDTO.getAmount(),rate.add(BigDecimal.valueOf(0.01)), loanApplicationRequestDTO.getTerm()),
+                rate.add(BigDecimal.valueOf(0.01)), false, true));
 
-        offers.add(new LoanOfferDTO(null, loanApplicationRequestDTO.getAmount().add(BigDecimal.valueOf(1000)),
-                loanApplicationRequestDTO.getTerm(), loanApplicationRequestDTO.getAmount().add(BigDecimal.valueOf(1000)).divide(BigDecimal.valueOf(loanApplicationRequestDTO.getTerm()),RoundingMode.HALF_UP),
-                BigDecimal.valueOf(Integer.valueOf(rate)).subtract(BigDecimal.valueOf(1)), true, true));
+        offers.add(new LoanOfferDTO(null, loanApplicationRequestDTO.getAmount(),
+                loanApplicationRequestDTO.getTerm(), calculationCredit.calcMonthlyOffer(loanApplicationRequestDTO.getAmount(),rate.subtract(BigDecimal.valueOf(0.01)), loanApplicationRequestDTO.getTerm()),
+                rate.subtract(BigDecimal.valueOf(0.01)), true, true));
 
-        log.info("Sended LoanOfferDTO ");
+        log.info("Sended LoanOfferDTO "+offers);
         return offers;
     }
 
     @ApiOperation(value = "get creditDTO",response = CreditDTO.class)
     @PostMapping("/conveyor/calculation")
     public CreditDTO calculation(@RequestBody ScoringDataDTO scoringDataDTO) {
-        log.info("Got ScoringDataDTO");
+        log.info("Got ScoringDataDTO" +scoringDataDTO.getFirstName() +" "+scoringDataDTO.getLastName()+" amount:"+scoringDataDTO.getAmount()+" birthday :"+scoringDataDTO.getBirthday()
+        +" term :"+scoringDataDTO.getTerm() + "dependent amount"+ scoringDataDTO.getDependentAmount() +"gender :"+scoringDataDTO.getGender()
+        +" marital status"+scoringDataDTO.getMaritalStatus());
         CreditDTO creditDTO = new CreditDTO();
         BigDecimal rate = calculationCredit.calcRate(scoringDataDTO);
 
-        BigDecimal psk = calculationCredit.calcPsk(scoringDataDTO, calculationCredit.calcRate(scoringDataDTO));
-
         BigDecimal monthlyPayment = calculationCredit.calcMonthly(scoringDataDTO, rate,scoringDataDTO.getTerm());
 
+        BigDecimal psk = calculationCredit.calcPsk(scoringDataDTO, monthlyPayment, scoringDataDTO.getTerm());
+
         List<PaymentScheduleElement> paymentScheduleElements = new ArrayList<>();
-        paymentScheduleElements.add(new PaymentScheduleElement(0, LocalDate.now(), psk, monthlyPayment, monthlyPayment, psk.subtract(monthlyPayment)));
-        for (int i = 1; i < scoringDataDTO.getTerm(); i++) {
-            paymentScheduleElements.add(new PaymentScheduleElement(i, paymentScheduleElements.get(i - 1).
-                    getDate().plusMonths(1), scoringDataDTO.getAmount(), monthlyPayment,
-                    monthlyPayment,scoringDataDTO.getAmount().subtract(monthlyPayment.multiply(BigDecimal.valueOf(i-1)))));
+
+        for (int i = 1; i <= scoringDataDTO.getTerm(); i++) {
+            BigDecimal remainingDebt=scoringDataDTO.getAmount().subtract(monthlyPayment.multiply(BigDecimal.valueOf(i-1)));
+            if(remainingDebt.intValue()<0){
+                remainingDebt=new BigDecimal(0);
+            }
+            paymentScheduleElements.add(new PaymentScheduleElement(i, LocalDate.now()
+                    .plusMonths(i), scoringDataDTO.getAmount(), monthlyPayment,
+                    monthlyPayment,remainingDebt));
         }
 
         creditDTO.setAmount(scoringDataDTO.getAmount());
@@ -98,7 +105,7 @@ public class ConveyorController {
         creditDTO.setIsInsuranceEnabled(scoringDataDTO.getIsInsuranceEnabled());
         creditDTO.setIsSalaryClient(scoringDataDTO.getIsSalaryClient());
         creditDTO.setPaymentSchedule(paymentScheduleElements);
-        log.info("Sended CreditDTO");
+        log.info("Sended CreditDTO"+ " rate :"+creditDTO.getRate()+ " psk :" +creditDTO.getPsk() +" amount: "+creditDTO.getAmount()+"montly payment:"+creditDTO.getMonthlyPayment());
         return creditDTO;
     }
 }
