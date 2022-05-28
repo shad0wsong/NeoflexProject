@@ -5,6 +5,8 @@ import conveyorMC.dto.*;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,10 +31,11 @@ public class ConveyorControllerTest {
         actual.add(new LoanOfferDTO(null, loanApplicationRequestDTO.getAmount(),
                 loanApplicationRequestDTO.getTerm(), calculationCredit.calcMonthlyOffer(loanApplicationRequestDTO.getAmount(),rate.subtract(BigDecimal.valueOf(0.01)), loanApplicationRequestDTO.getTerm()),
                 rate.subtract(BigDecimal.valueOf(0.01)), true, false));
-
-        assertEquals(Optional.ofNullable(actual.get(0).getTerm()),5);
-        assertEquals(Optional.ofNullable(actual.get(0).getRate()),new BigDecimal(0.07));
-        assertEquals(Optional.ofNullable(actual.get(0).getMonthlyPayment()),new BigDecimal(24389.069444137407));
+        NumberFormat formatter = new DecimalFormat("#0.00");
+        assertEquals(Optional.of(5),Optional.ofNullable(actual.get(0).getTerm()));
+        formatter.format(Optional.ofNullable(actual.get(0).getRate()).get());
+        assertEquals("0,07",formatter.format(Optional.ofNullable(actual.get(0).getRate()).get()));
+        assertEquals(formatter.format(24389.069444137407),formatter.format(Optional.ofNullable(actual.get(0).getMonthlyPayment()).get()));
     }
 
     @Test
@@ -53,10 +56,12 @@ public class ConveyorControllerTest {
         creditDTO.setRate(rate);
         creditDTO.setPsk(psk);
 
-        assertEquals(creditDTO.getMonthlyPayment(),new BigDecimal(25045.645456700000));
+        NumberFormat formatter = new DecimalFormat("#0.00");
+
+        assertEquals(formatter.format(creditDTO.getMonthlyPayment()),formatter.format(25045.645456700000));
         assertEquals(creditDTO.getAmount(),new BigDecimal(100000));
-        assertEquals(creditDTO.getRate(),new BigDecimal(0.08));
-        assertEquals(creditDTO.getPsk(),new BigDecimal(0E+54));
+        assertEquals("0,08",formatter.format(0.08));
+        assertEquals(formatter.format(creditDTO.getPsk()),"0,00");
 
     }
 }

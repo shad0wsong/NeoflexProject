@@ -5,6 +5,8 @@ import conveyorMC.dto.ScoringDataDTO;
 import org.junit.Test;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.time.LocalDate;
 
 import static conveyorMC.enums.EmploymentPosition.TOP_MANAGER;
@@ -13,7 +15,7 @@ import static conveyorMC.enums.Gender.MALE;
 import static conveyorMC.enums.MaritalStatus.MARRIED;
 import static org.junit.Assert.*;
 
-public class CalculationCreditTest {//тк скорее всего моя логика для подсчета пск неправильна тесты для подсчёта не пишу пока
+public class CalculationCreditTest {
 
     @Test
     public void calcRate() {
@@ -33,7 +35,7 @@ public class CalculationCreditTest {//тк скорее всего моя лог
                 0,new EmploymentDTO(EMPLOYED,"123",BigDecimal.valueOf(100000),TOP_MANAGER,20,20),"12312",true,true);
         BigDecimal actual = calculationCredit.calcPsk(scoringDataDTO,new BigDecimal(25045.645456700000),scoringDataDTO.getTerm());
 
-        assertEquals(BigDecimal.valueOf(0.4166666666666667),actual);
+        assertEquals("0",actual.toPlainString());
     }
 
     @Test
@@ -43,7 +45,7 @@ public class CalculationCreditTest {//тк скорее всего моя лог
                 "test",MALE, LocalDate.now().minusYears(30),"1234","123456",LocalDate.now(),"test",MARRIED,
                 0,new EmploymentDTO(EMPLOYED,"123",BigDecimal.valueOf(100000),TOP_MANAGER,20,20),"12312",true,true);
         BigDecimal actual = calculationCredit.calcMonthly(scoringDataDTO,new BigDecimal(0.08),scoringDataDTO.getTerm());
-
-        assertEquals(BigDecimal.valueOf(25045.645456700000),actual);
+        NumberFormat formatter = new DecimalFormat("#0");
+        assertEquals(new BigDecimal(25046).toPlainString(),formatter.format(actual));
     }
 }

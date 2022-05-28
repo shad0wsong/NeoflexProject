@@ -4,6 +4,7 @@ package conveyorMC.dto;
 import conveyorMC.enums.EmploymentPosition;
 import conveyorMC.enums.EmploymentStatus;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 
@@ -12,6 +13,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class EmploymentDTO {
     EmploymentStatus employmentStatus;
     String employerINN;

@@ -27,9 +27,9 @@ public enum Gender {
     }
 
     @JsonCreator
-    public static Gender fromText(String text){
-        for(Gender r : Gender.values()){
-            if(r.getGender().equals(text)){
+    public static Gender fromText(String text) {
+        for (Gender r : Gender.values()) {
+            if (r.getGender().equals(text)) {
                 return r;
             }
         }

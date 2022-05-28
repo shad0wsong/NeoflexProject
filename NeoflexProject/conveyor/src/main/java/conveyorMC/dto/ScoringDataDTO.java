@@ -3,6 +3,7 @@ package conveyorMC.dto;
 import conveyorMC.enums.Gender;
 import conveyorMC.enums.MaritalStatus;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,6 +14,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class ScoringDataDTO {
 
     BigDecimal amount;

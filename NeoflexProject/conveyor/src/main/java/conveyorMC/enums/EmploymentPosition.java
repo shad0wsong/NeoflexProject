@@ -33,9 +33,9 @@ public enum EmploymentPosition {
     }
 
     @JsonCreator
-    public static EmploymentPosition fromText(String text){
-        for(EmploymentPosition r : EmploymentPosition.values()){
-            if(r.getName().equals(text)){
+    public static EmploymentPosition fromText(String text) {
+        for (EmploymentPosition r : EmploymentPosition.values()) {
+            if (r.getName().equals(text)) {
                 return r;
             }
         }

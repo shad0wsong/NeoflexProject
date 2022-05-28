@@ -30,9 +30,9 @@ public enum MaritalStatus {
 
 
     @JsonCreator
-    public static MaritalStatus fromText(String text){
-        for(MaritalStatus r : MaritalStatus.values()){
-            if(r.getName().equals(text)){
+    public static MaritalStatus fromText(String text) {
+        for (MaritalStatus r : MaritalStatus.values()) {
+            if (r.getName().equals(text)) {
                 return r;
             }
         }
