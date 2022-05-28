@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @Getter
 @Setter
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoanOfferDtoEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -47,7 +47,7 @@ public class LoanOfferDtoEntity {
                 ", rate=" + rate +
                 ", isInsuranceEnabled=" + isInsuranceEnabled +
                 ", isSalaryClient=" + isSalaryClient +
-                ","+
+                "," +
                 '}';
     }
 }

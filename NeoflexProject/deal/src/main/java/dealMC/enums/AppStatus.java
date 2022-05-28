@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public enum AppStatus {
     @JsonProperty("PREAPPROVAL")
-        PREAPPROVAL,
+    PREAPPROVAL,
     @JsonProperty("APPROVED")
     APPROVED,
     @JsonProperty("CC_DENIED")

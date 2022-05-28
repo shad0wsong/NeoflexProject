@@ -1,7 +1,6 @@
 package dealMC.models;
 
 
-import dealMC.enums.CreditStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,7 +13,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class PaymentScheduleElementEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -52,7 +51,7 @@ public class PaymentScheduleElementEntity {
                 ", interestPayment=" + interestPayment +
                 ", debtPayment=" + debtPayment +
                 ", remainingDebt=" + remainingDebt +
-                ","+
+                "," +
                 '}';
     }
 }

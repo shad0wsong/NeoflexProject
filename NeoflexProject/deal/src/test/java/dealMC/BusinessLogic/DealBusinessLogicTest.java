@@ -19,7 +19,7 @@ public class DealBusinessLogicTest extends TestCase {
     }
 
     public void testSetScoringData() {
-        
+
     }
 
     public void testSetCredit() {

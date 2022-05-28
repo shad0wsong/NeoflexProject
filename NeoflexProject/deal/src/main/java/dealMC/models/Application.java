@@ -1,7 +1,5 @@
 package dealMC.models;
 
-import dealMC.dto.LoanOfferDTO;
-import dealMC.dto.PaymentScheduleElement;
 import dealMC.enums.AppStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -16,17 +14,17 @@ import java.util.Random;
 @AllArgsConstructor
 @Getter
 @Setter
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Application {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long appId;
 
-    @OneToOne( cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id")
     Client client;
 
-    @OneToOne( cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "credId")
     Credit credit;
 
@@ -35,7 +33,7 @@ public class Application {
 
     LocalDate creationDate;
 
-    @OneToOne( cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "loanOfferDTOId")
     LoanOfferDtoEntity appliedOffer;
 
@@ -63,21 +61,21 @@ public class Application {
         this.statusHistoryElements = statusHistoryElements;
     }
 
-     public Application(){
+    public Application() {
         byte[] array = new byte[7];
         new Random().nextBytes(array);
-        this.UUID= new String(array, Charset.forName("UTF-8"));
+        this.UUID = new String(array, Charset.forName("UTF-8"));
     }
 
     @Override
     public String toString() {
         return "Application{" +
                 "appId=" + appId +
-                ","+
-                ","+
+                "," +
+                "," +
                 ", appStatus=" + appStatus +
                 ", creationDate=" + creationDate +
-                ","+
+                "," +
                 ", signDate=" + signDate +
                 ", sesCode='" + sesCode + '\'' +
                 ", UUID='" + UUID + '\'' +

@@ -1,6 +1,6 @@
 package dealMC.models;
 
-import dealMC.dto.PaymentScheduleElement;
+
 import dealMC.enums.CreditStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -14,7 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Credit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -55,7 +55,7 @@ public class Credit {
     public String toString() {
         return "Credit{" +
                 "credId=" + credId +
-                ","   +
+                "," +
                 ", amount=" + amount +
                 ", term=" + term +
                 ", monthlyPayment=" + monthlyPayment +

@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @Getter
 @Setter
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class Client {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -77,7 +77,7 @@ public class Client {
     public String toString() {
         return "Client{" +
                 "id=" + id +
-                ", "+
+                ", " +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", middleName='" + middleName + '\'' +

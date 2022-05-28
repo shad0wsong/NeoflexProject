@@ -12,7 +12,7 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@FieldDefaults(level=AccessLevel.PRIVATE)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class StatusHistoryElement {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -38,7 +38,7 @@ public class StatusHistoryElement {
         return "StatusHistoryElement{" +
                 "statusHistoryElementId=" + statusHistoryElementId +
                 ", appStatus=" + appStatus +
-                ","+
+                "," +
                 '}';
     }
 }

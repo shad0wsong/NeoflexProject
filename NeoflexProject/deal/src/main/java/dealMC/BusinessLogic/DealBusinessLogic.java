@@ -3,7 +3,6 @@ package dealMC.BusinessLogic;
 import dealMC.BusinessLogicInterfaces.DealBusinessInterface;
 import dealMC.dto.CreditDTO;
 import dealMC.dto.LoanApplicationRequestDTO;
-import dealMC.dto.LoanOfferDTO;
 import dealMC.dto.ScoringDataDTO;
 import dealMC.models.Application;
 import dealMC.models.Credit;
@@ -18,16 +17,16 @@ import static dealMC.enums.CreditStatus.CALCULATED;
 @Service
 public class DealBusinessLogic implements DealBusinessInterface {
 
-    public List<LinkedHashMap> getConveyorOffers(Application getApp, LoanApplicationRequestDTO loanApplicationRequestDTO){
+    public List<LinkedHashMap> getConveyorOffers(Application getApp, LoanApplicationRequestDTO loanApplicationRequestDTO) {
         RestTemplate restTemplate = new RestTemplate();
         List<LinkedHashMap> loanOfferDTOList = restTemplate.postForObject("http://localhost:8080/conveyor/offers", loanApplicationRequestDTO, List.class);
-        for(int i =0;i<loanOfferDTOList.size();i++){
-            loanOfferDTOList.get(i).put("applicationID",getApp.getAppId());
+        for (int i = 0; i < loanOfferDTOList.size(); i++) {
+            loanOfferDTOList.get(i).put("applicationID", getApp.getAppId());
         }
         return loanOfferDTOList;
     }
 
-    public ScoringDataDTO setScoringData(ScoringDataDTO scoringDataDTO,Application application){
+    public ScoringDataDTO setScoringData(ScoringDataDTO scoringDataDTO, Application application) {
         scoringDataDTO.setFirstName(application.getClient().getFirstName());
         scoringDataDTO.setLastName(application.getClient().getLastName());
         scoringDataDTO.setMiddleName(application.getClient().getMiddleName());
@@ -41,7 +40,7 @@ public class DealBusinessLogic implements DealBusinessInterface {
         return scoringDataDTO;
     }
 
-    public Credit setCredit(Application application,ScoringDataDTO scoringDataDTO){
+    public Credit setCredit(Application application, ScoringDataDTO scoringDataDTO) {
         RestTemplate restTemplate = new RestTemplate();
         CreditDTO creditDTO = restTemplate.postForObject("http://localhost:8080/conveyor/calculation", scoringDataDTO, CreditDTO.class);
         Credit credit = new Credit();
@@ -54,6 +53,6 @@ public class DealBusinessLogic implements DealBusinessInterface {
         credit.setMonthlyPayment(creditDTO.getMonthlyPayment());
         credit.setRate(creditDTO.getRate());
 
-        return  credit;
+        return credit;
     }
 }
