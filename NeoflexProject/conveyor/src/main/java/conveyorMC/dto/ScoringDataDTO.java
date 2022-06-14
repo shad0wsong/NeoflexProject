@@ -1,7 +1,7 @@
-package conveyorMC.dto;
+package conveyormc.dto;
 
-import conveyorMC.enums.Gender;
-import conveyorMC.enums.MaritalStatus;
+import conveyormc.enums.Gender;
+import conveyormc.enums.MaritalStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

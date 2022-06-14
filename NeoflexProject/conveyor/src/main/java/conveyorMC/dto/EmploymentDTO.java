@@ -1,8 +1,8 @@
-package conveyorMC.dto;
+package conveyormc.dto;
 
 
-import conveyorMC.enums.EmploymentPosition;
-import conveyorMC.enums.EmploymentStatus;
+import conveyormc.enums.EmploymentPosition;
+import conveyormc.enums.EmploymentStatus;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 

@@ -1,16 +1,15 @@
-package conveyorMC.dto;
+package conveyormc.dto;
 
 
-import conveyorMC.LogicInterfaces.Validate;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 
 @Getter
@@ -19,47 +18,51 @@ import java.util.regex.Pattern;
 @NoArgsConstructor
 @ToString
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class LoanApplicationRequestDTO implements Validate {
+public class LoanApplicationRequestDTO {
+
+    @NotNull(message = "Amount cannot be null")
+    @Size(min=10000)
     BigDecimal amount;
+
+    @NotNull(message = "Term cannot be null")
     Integer term;
+
+    @Size(min = 2, max = 30, message
+            = "firstname must be between 2 and 30 characters")
     String firstName;
+
+    @Size(min = 2, max = 30, message
+            = "lastname must be between 2 and 30 characters")
     String lastName;
+
+
     String middleName;
+
+    @Email
     String email;
+
     LocalDate birthdayDate;
+
+    @Size(min = 4, max = 4)
     String passportSeries;
+
+    @Size(min = 6, max = 6)
     String passportNumber;
 
 
-    @Override
-    public List<String> validate() {
-        List<String> errorList = new ArrayList<>();
-        Pattern p = Pattern.compile("[\\w\\.]{2,50}@[\\w\\.]{2,20}");
-        Matcher matcher = p.matcher(email);
-        if (firstName.length() < 2 || firstName.length() > 30) {
-            errorList.add("Имя должно быть от 2 до 30 латинских букв.");
+    @AssertTrue
+    public boolean isValidMiddleName() {
+        if (this.middleName == null) {
+            return true;
+        } else {
+            return ((this.middleName.length() > 2) && (this.middleName.length() < 30)) ? false : true;
         }
-        if (lastName.length() < 2 || lastName.length() > 30) {
-            errorList.add("Фамилия должна быть от 2 до 30 латинских букв.");
-        }
-        if (middleName.length() < 2 || middleName.length() > 30) {
-            errorList.add("Отчество должно быть от 2 до 30 латинских букв.");
-        }
-        if (Integer.valueOf(String.valueOf(amount)) < 10000) {
-            errorList.add("Сумма кредита должно быть действительно число, большее или равное 10000.");
-        }
-        if (LocalDate.now().getYear() - birthdayDate.getYear() < 18) {
-            errorList.add("Дата рождения должно быть число в формате гггг-мм-дд, не позднее 18 лет с текущего дня.");
-        }
-        if (matcher == null) {
-            errorList.add("Email адрес - строка, подходящая под паттерн [\\w\\.]{2,50}@[\\w\\.]{2,20}");
-        }
-        if (passportSeries.length() != 4) {
-            errorList.add("Серия паспорта - 4 цифры");
-        }
-        if (passportSeries.length() != 6) {
-            errorList.add("Номер паспорта - 6 цифр.");
-        }
-        return errorList;
     }
+
+    @AssertTrue
+    public boolean isValidBirthday() {
+
+        return (LocalDate.now().getYear() - this.birthdayDate.getYear() < 18) ? false : true;
+    }
+
 }

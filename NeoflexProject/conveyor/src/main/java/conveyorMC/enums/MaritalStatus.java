@@ -1,4 +1,4 @@
-package conveyorMC.enums;
+package conveyormc.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

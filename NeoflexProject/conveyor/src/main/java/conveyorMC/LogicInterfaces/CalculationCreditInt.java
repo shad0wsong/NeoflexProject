@@ -1,6 +1,6 @@
-package conveyorMC.LogicInterfaces;
+package conveyormc.logicinterfaces;
 
-import conveyorMC.dto.ScoringDataDTO;
+import conveyormc.dto.ScoringDataDTO;
 
 import java.math.BigDecimal;
 

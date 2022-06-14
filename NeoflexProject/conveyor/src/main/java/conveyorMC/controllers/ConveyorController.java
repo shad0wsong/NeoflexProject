@@ -1,12 +1,13 @@
-package conveyorMC.controllers;
+package conveyormc.controllers;
 
 
-import conveyorMC.BusinessLogic.CalculationCredit;
-import conveyorMC.Exceptions.LoanApplicationRequestDTOValidationExc;
-import conveyorMC.dto.*;
+import conveyormc.businesslogic.CalculationCredit;
+import conveyormc.exceptions.LoanApplicationRequestDTOValidationExc;
+import conveyormc.dto.*;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -20,36 +21,20 @@ import java.util.logging.Logger;
 public class ConveyorController {
     static Logger log = Logger.getLogger(ConveyorController.class.getName());
 
-    BigDecimal rate = new BigDecimal(0.08);
+    @Value("${rate}")
+    BigDecimal rate;
 
     @Autowired
     CalculationCredit calculationCredit;
 
 
-    @GetMapping("/test")
-    public String test() {
-        String s = "Hello";
-        return s;
-    }
-
-
     @ApiOperation(value = "get offers", response = List.class)
     @PostMapping(value = "/conveyor/offers")
     public List<LoanOfferDTO> offers(@RequestBody LoanApplicationRequestDTO loanApplicationRequestDTO) throws LoanApplicationRequestDTOValidationExc {
+
         log.info("Got LoanApplicationRequestDTO " + loanApplicationRequestDTO.getFirstName() + " " + loanApplicationRequestDTO.getLastName()
                 + " " + loanApplicationRequestDTO.getMiddleName() + "amount: " + loanApplicationRequestDTO.getAmount() + " passport: " + loanApplicationRequestDTO.getPassportSeries() + " " +
                 loanApplicationRequestDTO.getPassportNumber() + "birthday:" + loanApplicationRequestDTO.getBirthdayDate());
-
-
-        List<String> errorList = loanApplicationRequestDTO.validate();
-        if (!errorList.isEmpty()) {
-            String errorString = "";
-            for (String e : errorList) {
-                errorString += e;
-            }
-            log.info("Bad request.ERROR 400 ");
-            throw new LoanApplicationRequestDTOValidationExc(errorString);
-        }
 
 
         List<LoanOfferDTO> offers = new ArrayList<>();

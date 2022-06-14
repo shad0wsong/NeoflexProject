@@ -1,7 +1,7 @@
-package conveyorMC.BusinessLogic;
+package conveyormc.businesslogic;
 
-import conveyorMC.dto.EmploymentDTO;
-import conveyorMC.dto.ScoringDataDTO;
+import conveyormc.dto.EmploymentDTO;
+import conveyormc.dto.ScoringDataDTO;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -9,10 +9,10 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.time.LocalDate;
 
-import static conveyorMC.enums.EmploymentPosition.TOP_MANAGER;
-import static conveyorMC.enums.EmploymentStatus.EMPLOYED;
-import static conveyorMC.enums.Gender.MALE;
-import static conveyorMC.enums.MaritalStatus.MARRIED;
+import static conveyormc.enums.EmploymentPosition.TOP_MANAGER;
+import static conveyormc.enums.EmploymentStatus.EMPLOYED;
+import static conveyormc.enums.Gender.MALE;
+import static conveyormc.enums.MaritalStatus.MARRIED;
 import static org.junit.Assert.*;
 
 public class CalculationCreditTest {

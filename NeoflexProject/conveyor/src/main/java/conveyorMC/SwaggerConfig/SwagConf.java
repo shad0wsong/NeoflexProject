@@ -1,4 +1,4 @@
-package conveyorMC.SwaggerConfig;
+package conveyormc.swaggerconfig;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;

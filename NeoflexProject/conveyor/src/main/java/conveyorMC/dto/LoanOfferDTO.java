@@ -1,4 +1,4 @@
-package conveyorMC.dto;
+package conveyormc.dto;
 
 
 import lombok.*;

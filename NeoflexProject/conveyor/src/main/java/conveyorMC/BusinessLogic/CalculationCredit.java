@@ -1,7 +1,7 @@
-package conveyorMC.BusinessLogic;
+package conveyormc.businesslogic;
 
-import conveyorMC.LogicInterfaces.CalculationCreditInt;
-import conveyorMC.dto.ScoringDataDTO;
+import conveyormc.logicinterfaces.CalculationCreditInt;
+import conveyormc.dto.ScoringDataDTO;
 
 
 import org.springframework.stereotype.Service;
@@ -11,11 +11,11 @@ import java.math.RoundingMode;
 import java.time.LocalDate;
 import java.util.logging.Logger;
 
-import static conveyorMC.enums.EmploymentPosition.MIDDLE_MANAGER;
-import static conveyorMC.enums.EmploymentPosition.TOP_MANAGER;
-import static conveyorMC.enums.EmploymentStatus.*;
-import static conveyorMC.enums.Gender.*;
-import static conveyorMC.enums.MaritalStatus.*;
+import static conveyormc.enums.EmploymentPosition.MIDDLE_MANAGER;
+import static conveyormc.enums.EmploymentPosition.TOP_MANAGER;
+import static conveyormc.enums.EmploymentStatus.*;
+import static conveyormc.enums.Gender.*;
+import static conveyormc.enums.MaritalStatus.*;
 
 @Service
 public class CalculationCredit implements CalculationCreditInt {
