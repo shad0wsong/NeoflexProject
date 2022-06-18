@@ -1,11 +1,12 @@
 package conveyormc.logicinterfaces;
 
 import conveyormc.dto.ScoringDataDTO;
+import conveyormc.exceptions.LoanApplicationRequestDTOValidationExc;
 
 import java.math.BigDecimal;
 
 public interface CalculationCreditInt {
-    BigDecimal calcRate(ScoringDataDTO scoringDataDTO);
+    BigDecimal calcRate(ScoringDataDTO scoringDataDTO) throws LoanApplicationRequestDTOValidationExc;
 
     BigDecimal calcPsk(ScoringDataDTO scoringDataDTO, BigDecimal monthly, Integer term);
 

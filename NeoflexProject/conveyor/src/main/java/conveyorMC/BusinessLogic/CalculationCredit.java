@@ -1,5 +1,6 @@
 package conveyormc.businesslogic;
 
+import conveyormc.exceptions.LoanApplicationRequestDTOValidationExc;
 import conveyormc.logicinterfaces.CalculationCreditInt;
 import conveyormc.dto.ScoringDataDTO;
 
@@ -23,11 +24,11 @@ public class CalculationCredit implements CalculationCreditInt {
     static Logger log = Logger.getLogger(CalculationCredit.class.getName());
 
     @Override
-    public BigDecimal calcRate(ScoringDataDTO scoringDataDTO) {
+    public BigDecimal calcRate(ScoringDataDTO scoringDataDTO) throws LoanApplicationRequestDTOValidationExc {
         BigDecimal rate = BigDecimal.valueOf(0.08);
         if (scoringDataDTO.getEmployment().getEmploymentStatus() == UNEMPLOYED) {
             log.info("DECLINED :UNEMPLOYED");
-            throw new RuntimeException();
+            throw new LoanApplicationRequestDTOValidationExc("DECLINED :UNEMPLOYED");
         }
         if (scoringDataDTO.getEmployment().getEmploymentStatus() == SELFEMPLOYED) {
             rate.add(BigDecimal.valueOf(0.01));
@@ -44,7 +45,7 @@ public class CalculationCredit implements CalculationCreditInt {
         }
         if (Integer.valueOf(String.valueOf(scoringDataDTO.getAmount())) > Integer.valueOf(String.valueOf(scoringDataDTO.getEmployment().getSalary())) * 20) {
             log.info("DECLINED :NOT ENOUGH SALARY");
-            throw new RuntimeException();
+            throw new LoanApplicationRequestDTOValidationExc("DECLINED :NOT ENOUGH SALARY");
         }
         if (scoringDataDTO.getMaritalStatus() == MARRIED) {
             rate.subtract(BigDecimal.valueOf(0.03));
@@ -58,7 +59,7 @@ public class CalculationCredit implements CalculationCreditInt {
 
         if (LocalDate.now().getYear() - scoringDataDTO.getBirthday().getYear() < 20 || LocalDate.now().getYear() - scoringDataDTO.getBirthday().getYear() > 60) {
             log.info("DECLINED :TOO OLD OR TOO YOUNG");
-            throw new RuntimeException();
+            throw new LoanApplicationRequestDTOValidationExc("DECLINED :TOO OLD OR TOO YOUNG");
         }
 
 
@@ -77,11 +78,11 @@ public class CalculationCredit implements CalculationCreditInt {
         }
         if (scoringDataDTO.getEmployment().getWorkExperienceTotal() < 12) {
             log.info("DECLINED :NOT ENOUGH WORK EXP");
-            throw new RuntimeException();
+            throw new LoanApplicationRequestDTOValidationExc("DECLINED :NOT ENOUGH WORK EXP");
         }
         if (scoringDataDTO.getEmployment().getWorkExperienceCurrent() < 3) {
             log.info("DECLINED :NOT ENOUGH WORK EXP CURRENT");
-            throw new RuntimeException();
+            throw new LoanApplicationRequestDTOValidationExc("DECLINED :NOT ENOUGH WORK EXP CURRENT");
         }
 
         return rate;

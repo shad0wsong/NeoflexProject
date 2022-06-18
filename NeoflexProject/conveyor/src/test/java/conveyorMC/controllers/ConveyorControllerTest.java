@@ -2,6 +2,7 @@ package conveyormc.controllers;
 
 import conveyormc.businesslogic.CalculationCredit;
 import conveyormc.dto.*;
+import conveyormc.exceptions.LoanApplicationRequestDTOValidationExc;
 import org.junit.Test;
 
 import java.math.BigDecimal;
@@ -39,7 +40,7 @@ public class ConveyorControllerTest {
     }
 
     @Test
-    public void calculation() {
+    public void calculation() throws LoanApplicationRequestDTOValidationExc {
         CalculationCredit calculationCredit = new CalculationCredit();
         ScoringDataDTO scoringDataDTO = new ScoringDataDTO(BigDecimal.valueOf(100000),5,"test","test",
                 "test",MALE,LocalDate.now().minusYears(30),"1234","123456",LocalDate.now(),"test",MARRIED,

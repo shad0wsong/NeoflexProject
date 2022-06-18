@@ -20,8 +20,7 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoanApplicationRequestDTO {
 
-    @NotNull(message = "Amount cannot be null")
-    @Size(min=10000)
+
     BigDecimal amount;
 
     @NotNull(message = "Term cannot be null")
@@ -35,7 +34,8 @@ public class LoanApplicationRequestDTO {
             = "lastname must be between 2 and 30 characters")
     String lastName;
 
-
+    @Size(min = 2, max = 30, message
+            = "middleName must be between 2 and 30 characters")
     String middleName;
 
     @Email
@@ -50,19 +50,11 @@ public class LoanApplicationRequestDTO {
     String passportNumber;
 
 
-    @AssertTrue
-    public boolean isValidMiddleName() {
-        if (this.middleName == null) {
-            return true;
-        } else {
-            return ((this.middleName.length() > 2) && (this.middleName.length() < 30)) ? false : true;
-        }
-    }
 
     @AssertTrue
     public boolean isValidBirthday() {
 
-        return (LocalDate.now().getYear() - this.birthdayDate.getYear() < 18) ? false : true;
+        return (LocalDate.now().getYear() - this.birthdayDate.getYear() > 18);
     }
 
 }
