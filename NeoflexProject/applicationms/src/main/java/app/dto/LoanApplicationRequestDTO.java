@@ -1,15 +1,11 @@
-package dealms.dto;
-
+package app.dto;
 
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-
 
 @Getter
 @Setter
@@ -19,10 +15,11 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoanApplicationRequestDTO {
 
-
+    @DecimalMin("10000")
     BigDecimal amount;
 
 
+    @Min(5)
     Integer term;
 
     @Size(min = 2, max = 30, message
