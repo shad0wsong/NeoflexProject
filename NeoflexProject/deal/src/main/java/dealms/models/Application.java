@@ -41,7 +41,6 @@ public class Application {
 
     String sesCode;
 
-    String UUID;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "application_history",
@@ -62,9 +61,6 @@ public class Application {
     }
 
     public Application() {
-        byte[] array = new byte[7];
-        new Random().nextBytes(array);
-        this.UUID = new String(array, Charset.forName("UTF-8"));
     }
 
     @Override
@@ -78,7 +74,6 @@ public class Application {
                 "," +
                 ", signDate=" + signDate +
                 ", sesCode='" + sesCode + '\'' +
-                ", UUID='" + UUID + '\'' +
                 ", statusHistoryElements=" + statusHistoryElements +
                 '}';
     }

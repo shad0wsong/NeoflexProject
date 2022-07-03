@@ -14,5 +14,5 @@ public interface DealBusinessInterface {
 
     ScoringDataDTO setScoringData(ScoringDataDTO scoringDataDTO, Application application);
 
-    Credit setCredit(Application application, ScoringDataDTO scoringDataDTO);
+    Credit setCredit( ScoringDataDTO scoringDataDTO);
 }

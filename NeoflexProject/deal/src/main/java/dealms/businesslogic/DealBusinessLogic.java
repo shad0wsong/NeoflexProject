@@ -51,7 +51,7 @@ public class DealBusinessLogic implements DealBusinessInterface {
         return scoringDataDTO;
     }
 
-    public Credit setCredit(Application application, ScoringDataDTO scoringDataDTO) {
+    public Credit setCredit( ScoringDataDTO scoringDataDTO) {
 
         CreditDTO creditDTO = restTemplate.postForObject(calc, scoringDataDTO, CreditDTO.class);
         Credit credit = new Credit();

@@ -49,10 +49,9 @@ public class DealController {
         log.info("Got loanapplicationRequestDTO: " + loanApplicationRequestDTO);
         Client client = clientInt.setClient(loanApplicationRequestDTO);
         Application application = new Application();
-        clientInt.setAppAndClientAndSave(client, application);
+        Application getApp=clientInt.setAppAndClientAndSave(client, application);
         log.info("Saved application " + application);
         log.info("Saved client " + client);
-        Application getApp = appGeneratorInt.getAppByUUID(application);
         List<LinkedHashMap> loanOfferDTOList = dealBusinessInterface.getConveyorOffers(getApp, loanApplicationRequestDTO);
         log.info("Sended offers request for conveyor");
         log.info("Returned offer list" + loanOfferDTOList);
@@ -76,7 +75,7 @@ public class DealController {
         log.info("Got ScoringDataDto and application" + scoringDataDTO + "  " + application);
         scoringDataDTO = dealBusinessInterface.setScoringData(scoringDataDTO, application);
         log.info("Set scoringdata info" + scoringDataDTO);
-        Credit credit = dealBusinessInterface.setCredit(application, scoringDataDTO);
+        Credit credit = dealBusinessInterface.setCredit(scoringDataDTO);
         log.info("Set credit info" + credit);
         creditInt.setCreditAndAppAndSave(credit, application);
 

@@ -28,10 +28,11 @@ public class ClientGenerator implements ClientInt {
 
     }
 
-    public void setAppAndClientAndSave(Client client, Application application) {
+    public Application setAppAndClientAndSave(Client client, Application application) {
         client.setApplication(application);
         application.setClient(client);
         clientManagerInterface.save(client);
-        appManagerInterface.save(application);
+        Application getApp=appManagerInterface.save(application);
+        return getApp;
     }
 }
