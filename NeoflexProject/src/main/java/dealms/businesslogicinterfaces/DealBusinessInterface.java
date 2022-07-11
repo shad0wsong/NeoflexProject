@@ -1,6 +1,7 @@
 package dealms.businesslogicinterfaces;
 
 
+import dealms.dto.EmailMessage;
 import dealms.dto.LoanApplicationRequestDTO;
 import dealms.dto.ScoringDataDTO;
 import dealms.models.Application;
@@ -14,5 +15,13 @@ public interface DealBusinessInterface {
 
     ScoringDataDTO setScoringData(ScoringDataDTO scoringDataDTO, Application application);
 
-    Credit setCredit( ScoringDataDTO scoringDataDTO);
+    Credit setCredit(ScoringDataDTO scoringDataDTO);
+
+    void signDocs(Long applicationId, EmailMessage emailMessage);
+
+    void rqSignDocs(Long applicationId, EmailMessage emailMessage);
+
+    void sendDocs(EmailMessage emailMessage, Long applicationId);
+
+    void createDocs(Long applicationId);
 }

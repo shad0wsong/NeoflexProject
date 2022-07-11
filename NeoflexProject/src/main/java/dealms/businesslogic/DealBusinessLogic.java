@@ -2,13 +2,18 @@ package dealms.businesslogic;
 
 import dealms.businesslogicinterfaces.DealBusinessInterface;
 import dealms.dto.CreditDTO;
+import dealms.dto.EmailMessage;
 import dealms.dto.LoanApplicationRequestDTO;
 import dealms.dto.ScoringDataDTO;
+import dealms.enums.EmailTheme;
 import dealms.models.Application;
 import dealms.models.Credit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedHashMap;
@@ -27,6 +32,9 @@ public class DealBusinessLogic implements DealBusinessInterface {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    KafkaTemplate<String, EmailMessage> kafkaTemplate;
 
     public List<LinkedHashMap> getConveyorOffers(Application getApp, LoanApplicationRequestDTO loanApplicationRequestDTO) {
 
@@ -51,7 +59,7 @@ public class DealBusinessLogic implements DealBusinessInterface {
         return scoringDataDTO;
     }
 
-    public Credit setCredit( ScoringDataDTO scoringDataDTO) {
+    public Credit setCredit(ScoringDataDTO scoringDataDTO) {
 
         CreditDTO creditDTO = restTemplate.postForObject(calc, scoringDataDTO, CreditDTO.class);
         Credit credit = new Credit();
@@ -65,5 +73,28 @@ public class DealBusinessLogic implements DealBusinessInterface {
         credit.setRate(creditDTO.getRate());
 
         return credit;
+    }
+
+    public void sendDocs(EmailMessage emailMessage, Long applicationId) {
+        emailMessage.setTheme(EmailTheme.SEND_DOCUMENTS);
+        emailMessage.setApplicationId(applicationId);
+        kafkaTemplate.send("send-documents", emailMessage);
+    }
+
+    public void rqSignDocs(Long applicationId, EmailMessage emailMessage) {
+        emailMessage.setTheme(EmailTheme.FINISH_REGISTRATION);
+        emailMessage.setApplicationId(applicationId);
+        kafkaTemplate.send("finish-registration", emailMessage);
+    }
+
+    public void signDocs(Long applicationId, EmailMessage emailMessage) {
+        emailMessage.setTheme(EmailTheme.SEND_SES);
+        emailMessage.setApplicationId(applicationId);
+        kafkaTemplate.send("send-ses", emailMessage);
+    }
+
+    public void createDocs(Long applicationId) {
+        kafkaTemplate.send("create-documents", new EmailMessage("someemail@mail.ru", EmailTheme.CREATE_DOCUMENTS, applicationId));
+
     }
 }

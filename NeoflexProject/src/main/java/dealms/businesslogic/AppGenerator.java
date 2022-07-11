@@ -27,7 +27,7 @@ public class AppGenerator implements AppGeneratorInt {
         return getApp;
     }
 
-    public void setAndSaveApp(LoanOfferDTO loanOfferDTO) throws AppNotFoundExc {
+    public Application setAndSaveApp(LoanOfferDTO loanOfferDTO) throws AppNotFoundExc {
         Long appId = loanOfferDTO.getApplicationID();
         Optional<Application> application = appManagerInterface.findById(appId);
         Application realApp =Optional.ofNullable(application.get()).orElseThrow(() -> new AppNotFoundExc("no such app")) ;
@@ -35,6 +35,7 @@ public class AppGenerator implements AppGeneratorInt {
         realApp.getStatusHistoryElements().add(new StatusHistoryElement(PREAPPROVAL));
         realApp.setAppliedOffer(new LoanOfferDtoEntity(loanOfferDTO.getRequestedAmount(), loanOfferDTO.getTerm(),
                 loanOfferDTO.getMonthlyPayment(), loanOfferDTO.getRate(), loanOfferDTO.getIsInsuranceEnabled(), loanOfferDTO.getIsSalaryClient(), realApp));
-        appManagerInterface.save(realApp);
+        Application returnApp=appManagerInterface.save(realApp);
+        return returnApp;
     }
 }
