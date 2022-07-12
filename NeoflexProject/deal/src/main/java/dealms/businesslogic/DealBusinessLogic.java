@@ -18,6 +18,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Optional;
 
 import static dealms.enums.CreditStatus.CALCULATED;
 
@@ -97,4 +98,5 @@ public class DealBusinessLogic implements DealBusinessInterface {
         kafkaTemplate.send("create-documents", new EmailMessage("someemail@mail.ru", EmailTheme.CREATE_DOCUMENTS, applicationId));
 
     }
+
 }

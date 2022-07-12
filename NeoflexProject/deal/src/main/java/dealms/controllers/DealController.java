@@ -109,4 +109,19 @@ public class DealController {
         log.info("Sended request to Kafka");
     }
 
+    @ApiOperation(value = " get app by id ")
+    @GetMapping(value = "/deal/admin/application/{applicationId}")
+    public Application getAppById(@PathVariable(value = "applicationId") Long applicationId) throws AppNotFoundExc {
+        Application application=appGeneratorInt.getAppByID(applicationId);
+        log.info("Returned app by id");
+        return application;
+    }
+
+    @ApiOperation(value = " get all applications ")
+    @GetMapping(value = "/deal/admin/application")
+    public Iterable getAllApp() {
+        Iterable<Application> applications = appGeneratorInt.getAllApp();
+        log.info("Returned all apps");
+        return applications;
+    }
 }

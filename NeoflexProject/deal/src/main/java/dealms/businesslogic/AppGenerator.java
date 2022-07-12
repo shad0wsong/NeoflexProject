@@ -38,4 +38,9 @@ public class AppGenerator implements AppGeneratorInt {
         Application returnApp=appManagerInterface.save(realApp);
         return returnApp;
     }
+
+    public Iterable getAllApp(){
+        Iterable<Application> apps=appManagerInterface.findAll();
+        return apps;
+    }
 }
