@@ -1,0 +1,55 @@
+databaseChangeLog :
+  - changeSet :
+      id: create-application
+      author: Dan
+      changes :
+        - createTable:
+            tableName: application
+            columns:
+              - column:
+                  name: app_id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: id
+                    referencedTableName: Client
+                    referencedColumnNames: id
+              - column:
+                  name: cred_id
+                  type: bigint
+                  constraints:
+                    foreignKeyName: credId
+                    referencedTableName: Credit
+                    referencedColumnNames: credId
+              - column:
+                  name: app_status
+                  type: varchar(255)
+              - column:
+                  name: creation_date
+                  type: date
+              - column:
+                  name: loan_offerdtoid
+                  type: bigint
+                  constraints:
+                    foreignKeyName: loan_offerdtoid
+                    referencedTableName: loan_offer_dto_entity
+                    referencedColumnNames: loanOfferDTOId
+              - column:
+                  name: sign_date
+                  type: date
+              - column:
+                  name: statusHistoryElements
+                  type: bigint
+                  constraints:
+                    foreignKeyName: statusHistoryElementId
+                    referencedTableName: status_history_element
+                    referencedColumnNames: statusHistoryElementId
+              - column:
+                  name: ses_code
+                  type: varchar(255)
