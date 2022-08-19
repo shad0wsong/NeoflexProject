@@ -14,5 +14,5 @@ The client can refuse the conditions or agree. If he agrees, MC Deal sends a cod
 If the received code matches the one sent, MS dossier issues a loan (changes the status of the "Credit" entity to ISSUED, and the status of the application to CREDIT_ISSUED)
 
 <h1>Architecture</h1>
-![image](https://user-images.githubusercontent.com/101453514/185654790-13be0850-3066-48de-8cb8-3d6ae9aef9ae.png)
+https://user-images.githubusercontent.com/101453514/185654790-13be0850-3066-48de-8cb8-3d6ae9aef9ae.png
 
