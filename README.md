@@ -12,3 +12,7 @@ After validation, the MC dossier sends an email to the client with approval or r
 The client sends a request for the formation of documents to MS Deal, MS Deal sends the client documents for signing and a link to the request for agreement to the terms by mail.
 The client can refuse the conditions or agree. If he agrees, MC Deal sends a code and a link to sign documents to the mail, where the client must send the received code to MC Deal.
 If the received code matches the one sent, MS dossier issues a loan (changes the status of the "Credit" entity to ISSUED, and the status of the application to CREDIT_ISSUED)
+
+<h1>Architecture</h1>
+![image](https://user-images.githubusercontent.com/101453514/185654790-13be0850-3066-48de-8cb8-3d6ae9aef9ae.png)
+
