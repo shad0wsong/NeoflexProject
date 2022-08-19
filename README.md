@@ -1,6 +1,7 @@
 # NeoflexProject
-Hi this is a study project for Neoflex. Credit conveoyer with the logic below.
+Hi this is a study project for Neoflex. Credit conveoyer with the logic below.</nr>
 
+<h1>Project logic</h1>
 The user submits a loan application.
 MS Application performs prescoring of the application and if the prescoring passes, then the application is saved in MC Deal and sent to the CC.
 CC returns through the MS Application to the user 4 offers (entity "LoanOffer") for a loan with different conditions (for example, without insurance, with insurance, with a payroll client, with insurance and a payroll client) or a refusal.
